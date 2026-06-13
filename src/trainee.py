@@ -4,7 +4,17 @@ import matplotlib.pyplot as plt
 
 
 def load_data(filepath):
-    data = np.loadtxt(filepath, delimiter=',', skiprows=1)
+    try:
+        data = np.loadtxt(filepath, delimiter=',', skiprows=1)
+    except FileNotFoundError:
+        print(f"Error: '{filepath}' not found")
+        exit(1)
+    except ValueError as e:
+        print(f"Error: '{filepath}' is not in the correct format. ({e})")
+        exit(1)
+    if data.ndim != 2 or data.shape[1] < 2:
+        print(f"Error: '{filepath}' requires at least 2 columns.")
+        exit(1)
     return data
 
 def standardize_data(data):
@@ -13,10 +23,16 @@ def standardize_data(data):
 
     mileage_mean = np.mean(data[:, 0])
     mileage_std = np.std(data[:, 0])
+    if mileage_std == 0:
+        print("Error: The variance of mileage is zero (all data have the same value). Standardization cannot be performed.")
+        exit(1)
     standardized_data[:, 0] = (data[:, 0] - mileage_mean) / mileage_std
 
     price_mean = np.mean(data[:, 1])
     price_std = np.std(data[:, 1])
+    if price_std == 0:
+        print("Error: The variance of price is zero (all data have the same value). Standardization cannot be performed.")
+        exit(1)
     standardized_data[:, 1] = (data[:, 1] - price_mean) / price_std
 
     params = (
@@ -44,11 +60,11 @@ def train_data(data):
 
     learning_rate = 0.1
     tolerance = 1e-6
-    max_iterations = 10000
+    max_iterations = 100
 
     for j in range(max_iterations):
-        sum0 = 0
-        sum1 = 0
+        sum0 = 0.0
+        sum1 = 0.0
         for i in range(len(data)):
             sum0 += ((theta[1] * data[i][0]) + theta[0]) - data[i][1]
             sum1 += ((theta[1] * data[i][0]) + theta[0] - data[i][1]) * data[i][0]
@@ -105,3 +121,4 @@ if __name__ == "__main__":
     plt.legend()
     plt.grid(True)
     plt.show()
+    plt.close()

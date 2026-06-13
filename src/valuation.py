@@ -12,8 +12,17 @@ def main():
     except FileNotFoundError:
         theta0 = 0.0
         theta1 = 0.0
+    except KeyError:
+        print("model_param.json の形式が不正です。theta0=0, theta1=0 で予測します。")
+        theta0 = 0.0
+        theta1 = 0.0
 
-    mileage = float(input("Enter the mileage of the car: "))
+    while True:
+        try:
+            mileage = float(input("Enter the mileage of the car: "))
+            break
+        except ValueError:
+            print("Invalid input. Please enter a numeric value.")
 
     estimated_price = estimate_price(mileage, theta0, theta1)
 
