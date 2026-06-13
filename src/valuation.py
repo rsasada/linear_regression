@@ -10,8 +10,8 @@ def main():
         theta0 = theta_values['b']
         theta1 = theta_values['a']
     except FileNotFoundError:
-        print("Model parameters not found. Please train the model first.")
-        return
+        theta0 = 0.0
+        theta1 = 0.0
 
     mileage = float(input("Enter the mileage of the car: "))
 

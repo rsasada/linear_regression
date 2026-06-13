@@ -43,8 +43,10 @@ def train_data(data):
     theta = np.zeros(2, dtype=float)
 
     learning_rate = 0.1
-    
-    for j in range(100):
+    tolerance = 1e-6
+    max_iterations = 10000
+
+    for j in range(max_iterations):
         sum0 = 0
         sum1 = 0
         for i in range(len(data)):
@@ -56,6 +58,10 @@ def train_data(data):
 
         theta[0] -= tmp0
         theta[1] -= tmp1
+
+        if abs(tmp0) < tolerance and abs(tmp1) < tolerance:
+            print(f"Converged at iteration {j + 1}")
+            break
     
     return theta
 
