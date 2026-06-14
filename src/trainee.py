@@ -15,6 +15,9 @@ def load_data(filepath):
     if data.ndim != 2 or data.shape[1] < 2:
         print(f"Error: '{filepath}' requires at least 2 columns.")
         exit(1)
+    if np.any(data[:, 0] < 0):
+        print(f"Error: '{filepath}' contains negative mileage values.")
+        exit(1)
     return data
 
 def standardize_data(data):
@@ -60,7 +63,7 @@ def train_data(data):
 
     learning_rate = 0.1
     tolerance = 1e-6
-    max_iterations = 100
+    max_iterations = 1000
 
     for j in range(max_iterations):
         sum0 = 0.0
