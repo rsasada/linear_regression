@@ -29,6 +29,10 @@ def main():
 
     estimated_price = estimate_price(mileage, theta0, theta1)
 
+    if estimated_price < 0:
+        print("Prediction is below zero. This mileage is outside the reliable range of the model.")
+        return
+
     print(f"Estimated price for a car with {mileage} miles: ${estimated_price:.2f}")
 
 if __name__ == "__main__":
