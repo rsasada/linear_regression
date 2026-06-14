@@ -20,6 +20,9 @@ def main():
     while True:
         try:
             mileage = float(input("Enter the mileage of the car: "))
+            if mileage < 0:
+                print("Invalid input. Mileage must be zero or greater.")
+                continue
             break
         except ValueError:
             print("Invalid input. Please enter a numeric value.")
