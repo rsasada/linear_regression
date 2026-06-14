@@ -94,8 +94,8 @@ if __name__ == "__main__":
     theta = inverse_tandardizer(theta, params)
 
     original_theta_to_save = {
-            "b": theta[0],
-            "a": theta[1]
+            "theta0": float(theta[0]),
+            "theta1": float(theta[1])
         }
     try:
         with open('model_param.json', 'w') as f:

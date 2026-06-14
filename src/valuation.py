@@ -7,8 +7,8 @@ def main():
     try:
         with open('model_param.json', 'r') as f:
             theta_values = json.load(f)
-        theta0 = theta_values['b']
-        theta1 = theta_values['a']
+        theta0 = theta_values['theta0']
+        theta1 = theta_values['theta1']
     except FileNotFoundError:
         theta0 = 0.0
         theta1 = 0.0
